@@ -1,0 +1,7 @@
+ffmpeg -re -i check.h264 -vcodec copy -f h264 udp://192.168.1.241:6970
+
+ffplay -f h264 udp://192.168.1.92:6970
+
+ffmpeg -f v4l2 -i /dev/video0 check.h264
+
+ffmpeg -f v4l2 -framerate 30 -i /dev/video0 -f h264 udp://192.168.1.241:6970
