@@ -15,14 +15,14 @@ def ffmpeg2():
 proc = multiprocessing.Process(target=ffmpeg1)
 prob = multiprocessing.Process(target=ffmpeg2)
 
-proc.start()
+prob.start()
 #prob.start()
 time.sleep(10)
-proc.terminate()
+prob.terminate()
 
 time.sleep(0.3)
 
-prob.start()
+proc.start()
 time.sleep(20)
 #prob.terminate()
 

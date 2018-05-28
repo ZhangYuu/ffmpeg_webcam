@@ -1,12 +1,21 @@
-ffmpeg -re -i check.h264 -vcodec copy -f h264 udp://192.168.1.241:6970
+#for a simple server to cilent video streaming (local video file)
 
-ffplay -f h264 udp://192.168.1.92:6970
+ffmpeg -re -i check.h264 -vcodec copy -f h264 udp://192.168.1.241:6970  #running on server side
+
+ffplay -f h264 udp://192.168.1.92:6970  #running on cilent side
+
+
+#make a recording with local ubuntu camera and save it as "check.h264"
 
 ffmpeg -f v4l2 -i /dev/video0 check.h264
 
-ffmpeg -f v4l2 -framerate 30 -i /dev/video0 -f h264 udp://192.168.1.241:6970
 
-ffmpeg -f v4l2 -i /dev/video0 -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -f h264 udp://192.168.1.241:6970 -fflags nobuffer -analyzeduration 1000000
+#video streaming with ubuntu camera
 
+ffmpeg -f v4l2 -framerate 30 -i /dev/video0 -f h264 udp://192.168.1.241:6970 #simple version
+
+#with lower latency
+ffmpeg -f v4l2 -i /dev/video0 -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -f h264 udp://192.168.1.241:6970 -fflags nobuffer -analyzeduration 1000000 
+# change the size of packets & lower latency
 ffmpeg -re -f v4l2 -i /dev/video0 -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -f h264 udp://192.168.1.241:6970?pkt_size=1000 -fflags nobuffer -analyzeduration 1000
 
